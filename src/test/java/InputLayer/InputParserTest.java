@@ -12,11 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InputParserTest {
 
-    InputParser inputParser;
 
     @BeforeEach
     public void setUp() {
-        inputParser = new InputParser();
+        InputParser.getListOfCommands().clear();
     }
 
     @Test
@@ -24,7 +23,7 @@ class InputParserTest {
     public void testCheckForInstruction_validInput() {
         String input = "LRMMRM";
 
-        ArrayList<Instruction> result = inputParser.parseInputToInstruction(input);
+        ArrayList<Instruction> result = InputParser.parseInputToInstruction(input);
         ArrayList<Instruction> expectedResult = new ArrayList<>(){{
             add(L);
             add(R);
@@ -42,7 +41,7 @@ class InputParserTest {
     public void testCheckForInstruction_validLowerCaseInput() {
         String input = "lrmmrm";
 
-        ArrayList<Instruction> result = inputParser.parseInputToInstruction(input);
+        ArrayList<Instruction> result = InputParser.parseInputToInstruction(input);
         ArrayList<Instruction> expectedResult = new ArrayList<>(){{
             add(L);
             add(R);
@@ -60,7 +59,7 @@ class InputParserTest {
     public void testCheckForInstruction_invalidInput() {
         String input = "LRDMMDSRM";
 
-        assertThrows(IllegalArgumentException.class, () -> inputParser.parseInputToInstruction(input));
+        assertThrows(IllegalArgumentException.class, () -> InputParser.parseInputToInstruction(input));
     }
 
     @Test
@@ -68,7 +67,7 @@ class InputParserTest {
     public void testCheckForInstruction_emptyInput() {
         String input = "";
 
-        assertThrows(RuntimeException.class, () -> inputParser.parseInputToInstruction(input));
+        assertThrows(RuntimeException.class, () -> InputParser.parseInputToInstruction(input));
     }
 
     @Test
@@ -76,7 +75,7 @@ class InputParserTest {
     public void testCheckForCompassDirection_validInput() {
         String input = "E";
 
-        CompassDirection result = inputParser.checkCompassDirection(input);
+        CompassDirection result = InputParser.checkCompassDirection(input);
         CompassDirection expectedResult = CompassDirection.E;
 
         assertEquals(expectedResult, result);
@@ -87,7 +86,7 @@ class InputParserTest {
     public void testCheckForCompassDirection_validLowerCaseInput() {
         String input = "n";
 
-        CompassDirection result = inputParser.checkCompassDirection(input);
+        CompassDirection result = InputParser.checkCompassDirection(input);
         CompassDirection expectedResult = CompassDirection.N;
 
         assertEquals(expectedResult, result);
@@ -98,7 +97,7 @@ class InputParserTest {
     public void testCheckForCompassDirection_invalidInput() {
         String input = "1 3 2";
 
-        assertThrows(IllegalArgumentException.class, () -> inputParser.checkCompassDirection(input));
+        assertThrows(IllegalArgumentException.class, () -> InputParser.checkCompassDirection(input));
     }
 
     @Test
@@ -106,7 +105,7 @@ class InputParserTest {
     public void testCheckForParseInputToPosition_validInput() {
         String input = "1 2 N";
         Position expectedResult = new Position (1, 2, CompassDirection.N);
-        Position result = inputParser.parseInputToPosition(input);
+        Position result = InputParser.parseInputToPosition(input);
 
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult); //using assertj library to check the fields of the two
@@ -117,7 +116,7 @@ class InputParserTest {
     public void testCheckForParseInputToPosition_validLowerCaseInput() {
         String input = "1 2 n";
 
-        Position result = inputParser.parseInputToPosition(input);
+        Position result = InputParser.parseInputToPosition(input);
         Position expectedResult = new Position(1, 2, CompassDirection.N);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);

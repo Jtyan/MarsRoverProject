@@ -3,24 +3,23 @@ package LogicLayer;
 import InputLayer.CompassDirection;
 import InputLayer.PlateauSize;
 import InputLayer.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlateauTest {
+class MissionControlTest {
+
+    private static final MissionControl plateau = new MissionControl(new PlateauSize());
     private static final Rover rover1 = new Rover(new Position(2,4, CompassDirection.N));
     private static final Rover rover2 = new Rover(new Position(0,1, CompassDirection.S));
     private static final Rover rover3 = new Rover(new Position(2,3, CompassDirection.E));
     private static final Rover rover4 = new Rover(new Position(3,1, CompassDirection.W));
     @Test
     void testAddRover_WithValidPosition() {
-        Plateau plateau = new Plateau(new PlateauSize(5,5));
         ArrayList<Rover> mockListOfRovers = new ArrayList<>(){{
             add(new Rover(new Position(2,4, CompassDirection.N)));
             add(new Rover(new Position(0,1, CompassDirection.S)));
@@ -49,7 +48,6 @@ class PlateauTest {
     @Test
     @DisplayName("throw an exception when adding invalid position")
     public void testAddRover_WithInvalidPosition() {
-        Plateau plateau = new Plateau(new PlateauSize(5,5));
         plateau.addRover(rover1);
         plateau.addRover(rover2);
         System.out.println(plateau.getListOfRovers().size());
@@ -59,7 +57,6 @@ class PlateauTest {
     @Test
     @DisplayName("remove rover from listOfRover when given an existing rover")
     void testRemoveRover_WithExistingRover() {
-        Plateau plateau = new Plateau(new PlateauSize(5,5));
         plateau.addRover(rover1);
         plateau.addRover(rover2);
         plateau.removeRover(rover1);
@@ -75,7 +72,6 @@ class PlateauTest {
     @Test
     @DisplayName("remove rover from listOfRover when given a non-existing rover")
     void testRemoveRover_WithNonExistingRover() {
-        Plateau plateau = new Plateau(new PlateauSize(5,5));
         plateau.addRover(rover1);
         plateau.addRover(rover2);
 

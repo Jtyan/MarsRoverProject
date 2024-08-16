@@ -5,11 +5,11 @@ import InputLayer.Position;
 
 import java.util.ArrayList;
 
-public class Plateau {
+public class MissionControl {
     private PlateauSize plateauSize;
     private ArrayList<Rover> listOfRovers = new ArrayList<>();
 
-    public Plateau(PlateauSize plateauSize) {
+    public MissionControl(PlateauSize plateauSize) {
         this.plateauSize = plateauSize;
     }
 

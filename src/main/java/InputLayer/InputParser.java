@@ -4,11 +4,15 @@ import java.util.ArrayList;
 
 public class InputParser {
 
-    ArrayList<Instruction> listOfCommands = new ArrayList<>();
+    private static ArrayList<Instruction> listOfCommands = new ArrayList<>();
 
     public String input;
 
-    public Instruction checkInstruction (String command) {
+    public static ArrayList<Instruction> getListOfCommands() {
+        return listOfCommands;
+    }
+
+    public static Instruction checkInstruction (String command) {
         for (Instruction validCommand : Instruction.values()) {
             if (validCommand.name().equalsIgnoreCase(command)) {
                 return Instruction.valueOf(command.toUpperCase());
@@ -17,7 +21,7 @@ public class InputParser {
         return null;
     }
 
-    public CompassDirection checkCompassDirection(String direction) {
+    public static CompassDirection checkCompassDirection(String direction) {
             for (CompassDirection validCommand : CompassDirection.values()) {
                 if (validCommand.name().equalsIgnoreCase(direction)) {
                     return CompassDirection.valueOf(direction.toUpperCase());
@@ -26,11 +30,12 @@ public class InputParser {
         throw new IllegalArgumentException("No direction details found!");
     }
 
-    public ArrayList<Instruction> parseInputToInstruction(String input) {
+    public static ArrayList<Instruction> parseInputToInstruction(String input) {
         if(input.isEmpty()) {
             System.out.println("No input found!");
             throw new RuntimeException("No input found!");
         }
+        input = input.replaceAll("[., ]", "");
         String[] inputArr = input.split("");
         for (String command : inputArr) {
             Instruction instruction = checkInstruction(command);
@@ -43,9 +48,8 @@ public class InputParser {
         return listOfCommands;
     }
 
-    public Position parseInputToPosition(String input) {
-
-        input = input.replace(" ", "");
+    public static Position parseInputToPosition(String input) {
+        input = input.replaceAll("[., ]", "");
         if (input.isEmpty() || input.length() > 3) {
             throw new IllegalArgumentException("input is invalid!");
         }
@@ -54,6 +58,11 @@ public class InputParser {
         return new Position(Integer.parseInt(inputArray[0]), Integer.parseInt(inputArray[1]), facingDirection);
     }
 
+    public static void parseInputToPlateau(String input){
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("input is invalid!");
+        }
 
+    }
 
 }
