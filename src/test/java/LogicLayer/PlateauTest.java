@@ -56,8 +56,20 @@ class PlateauTest {
     }
 
     @Test
-    void testRemoveRover() {
+    @DisplayName("remove rover from listOfRover when given an existing rover")
+    void testRemoveRover_WithExistingRover() {
+        ArrayList<Rover> mockListOfRovers = new ArrayList<>(){
+            {
+                add(new Rover(new Position(0, 1, CompassDirection.S)));
+            }
+        };
 
+        plateau.addRover(new Rover(new Position(2,4,CompassDirection.N)));
+        plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
+        plateau.removeRover(new Rover(new Position(2,4,CompassDirection.N)));
+        ArrayList<Rover> listOfRovers = plateau.getListOfRovers();
+
+        assertThat(mockListOfRovers).usingRecursiveComparison().isEqualTo(listOfRovers);
     }
 
     private <T> boolean compareRovers(T r1, T r2) {
