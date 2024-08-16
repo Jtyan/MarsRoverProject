@@ -22,4 +22,5 @@ public class Position {
     public CompassDirection getFacing() {
         return facing;
     }
+
 }

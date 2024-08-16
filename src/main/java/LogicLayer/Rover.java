@@ -32,7 +32,11 @@ public class Rover {
                 case S -> instruction.equals(Instruction.L) ? E : W;
                 case E -> instruction.equals(Instruction.L) ? N : S;
             };
-            getPosition().setFacing(newFacing);
+            setPosition(new Position(getPosition().getX(), getPosition().getY(), newFacing));
         }
+    }
+
+    public void move(Instruction instruction) {
+
     }
 }

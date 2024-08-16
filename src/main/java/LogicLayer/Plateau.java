@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Plateau {
     private PlateauSize plateauSize;
-    private static ArrayList<Rover> listOfRovers = new ArrayList<>();
+    private ArrayList<Rover> listOfRovers = new ArrayList<>();
 
     public Plateau(PlateauSize plateauSize) {
         this.plateauSize = plateauSize;
@@ -19,6 +19,13 @@ public class Plateau {
 
     public ArrayList<Rover> getListOfRovers() {
         return listOfRovers;
+    }
+
+    public Rover getRover(Rover rover) {
+        if (listOfRovers.contains(rover)) {
+            return rover;
+        }
+        throw new IllegalArgumentException("This rover does not exist on the plateau.");
     }
 
     public void addRover(Rover rover) {
@@ -41,18 +48,12 @@ public class Plateau {
     }
 
     public  void removeRover(Rover roverToDelete) {
-        try {
-            for(Rover rover: listOfRovers) {
-                if (rover.getPosition().equals(roverToDelete.getPosition())){
-                    listOfRovers.remove(rover);
-                }
+        for (Rover rover : listOfRovers) {
+            if (rover.equals(roverToDelete)) {
+                listOfRovers.remove(rover);
+            } else {
+                throw new IllegalArgumentException("This rover does not exist on the plateau.");
             }
-
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("This rover does not exist on the plateau.");
         }
     }
-
-
-
 }

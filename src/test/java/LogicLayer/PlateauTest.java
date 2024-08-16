@@ -14,13 +14,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlateauTest {
-
-
-    private static final Plateau plateau = new Plateau(new PlateauSize(5,5));
-
-
+    private static final Rover rover1 = new Rover(new Position(2,4, CompassDirection.N));
+    private static final Rover rover2 = new Rover(new Position(0,1, CompassDirection.S));
+    private static final Rover rover3 = new Rover(new Position(2,3, CompassDirection.E));
+    private static final Rover rover4 = new Rover(new Position(3,1, CompassDirection.W));
     @Test
     void testAddRover_WithValidPosition() {
+        Plateau plateau = new Plateau(new PlateauSize(5,5));
         ArrayList<Rover> mockListOfRovers = new ArrayList<>(){{
             add(new Rover(new Position(2,4, CompassDirection.N)));
             add(new Rover(new Position(0,1, CompassDirection.S)));
@@ -28,10 +28,10 @@ class PlateauTest {
             add(new Rover(new Position(3,1, CompassDirection.W)));
         }};
 
-        plateau.addRover(new Rover(new Position(2,4,CompassDirection.N)));
-        plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
-        plateau.addRover(new Rover(new Position(2,3, CompassDirection.E)));
-        plateau.addRover(new Rover(new Position(3,1, CompassDirection.W)));
+        plateau.addRover(rover1);
+        plateau.addRover(rover2);
+        plateau.addRover(rover3);
+        plateau.addRover(rover4);
         ArrayList<Rover> listOfRovers = plateau.getListOfRovers();
 
         assertEquals(listOfRovers.size(), mockListOfRovers.size());
@@ -49,27 +49,37 @@ class PlateauTest {
     @Test
     @DisplayName("throw an exception when adding invalid position")
     public void testAddRover_WithInvalidPosition() {
-        plateau.addRover(new Rover(new Position(2,4,CompassDirection.N)));
-        plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
-
+        Plateau plateau = new Plateau(new PlateauSize(5,5));
+        plateau.addRover(rover1);
+        plateau.addRover(rover2);
+        System.out.println(plateau.getListOfRovers().size());
         assertThrows(IllegalArgumentException.class, () -> plateau.addRover(new Rover(new Position(0,1, CompassDirection.E))));
     }
 
     @Test
     @DisplayName("remove rover from listOfRover when given an existing rover")
     void testRemoveRover_WithExistingRover() {
-        ArrayList<Rover> mockListOfRovers = new ArrayList<>(){
-            {
-                add(new Rover(new Position(0, 1, CompassDirection.S)));
-            }
-        };
+        Plateau plateau = new Plateau(new PlateauSize(5,5));
+        plateau.addRover(rover1);
+        plateau.addRover(rover2);
+        plateau.removeRover(rover1);
 
-        plateau.addRover(new Rover(new Position(2,4,CompassDirection.N)));
-        plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
-        plateau.removeRover(new Rover(new Position(2,4,CompassDirection.N)));
+        ArrayList<Rover> expectedListOfRovers = new ArrayList<>();
+        expectedListOfRovers.add(rover2);
+
         ArrayList<Rover> listOfRovers = plateau.getListOfRovers();
 
-        assertThat(mockListOfRovers).usingRecursiveComparison().isEqualTo(listOfRovers);
+        assertThat(expectedListOfRovers).usingRecursiveComparison().isEqualTo(listOfRovers);
+    }
+
+    @Test
+    @DisplayName("remove rover from listOfRover when given a non-existing rover")
+    void testRemoveRover_WithNonExistingRover() {
+        Plateau plateau = new Plateau(new PlateauSize(5,5));
+        plateau.addRover(rover1);
+        plateau.addRover(rover2);
+
+        assertThrows(IllegalArgumentException.class, () -> plateau.removeRover(rover3));;
     }
 
     private <T> boolean compareRovers(T r1, T r2) {
