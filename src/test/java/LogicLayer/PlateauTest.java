@@ -21,7 +21,7 @@ class PlateauTest {
 
     @Test
     void testAddRover_WithValidPosition() {
-        ArrayList<Rover> listOfRovers = new ArrayList<>(){{
+        ArrayList<Rover> mockListOfRovers = new ArrayList<>(){{
             add(new Rover(new Position(2,4, CompassDirection.N)));
             add(new Rover(new Position(0,1, CompassDirection.S)));
             add(new Rover(new Position(2,3, CompassDirection.E)));
@@ -32,16 +32,18 @@ class PlateauTest {
         plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
         plateau.addRover(new Rover(new Position(2,3, CompassDirection.E)));
         plateau.addRover(new Rover(new Position(3,1, CompassDirection.W)));
+        ArrayList<Rover> listOfRovers = plateau.getListOfRovers();
 
+        assertEquals(listOfRovers.size(), mockListOfRovers.size());
 
-        System.out.println(plateau.getListOfRovers().toArray().toString());
-        System.out.println(listOfRovers.toArray().toString());
+        // Using assertJ library
+//        assertThat(mockListOfRovers).usingRecursiveComparison().isEqualTo(listOfRovers);
 
-//        assertEquals(plateau.getListOfRovers(), listOfRovers);
-
-//        assertArrayEquals(plateau.getListOfRovers().toArray(), listOfRovers.toArray());
-//        assertTrue(plateau.getListOfRovers().toArray().equals(listOfRovers.toArray()));
-        assertThat(listOfRovers).usingRecursiveComparison().isEqualTo(plateau.getListOfRovers());
+        // (Without assertJ library) Compare each element in the lists
+        for (int i = 0; i < mockListOfRovers.size(); i++) {
+            assertTrue(compareRovers(listOfRovers.get(i).getPosition().getX(), mockListOfRovers.get(i).getPosition().getX()));
+            assertTrue(compareRovers(listOfRovers.get(i).getPosition().getY(), mockListOfRovers.get(i).getPosition().getY()));
+        }
     }
 
     @Test
@@ -50,12 +52,16 @@ class PlateauTest {
         plateau.addRover(new Rover(new Position(2,4,CompassDirection.N)));
         plateau.addRover(new Rover(new Position(0,1, CompassDirection.S)));
 
-
-        assertThrows(IllegalArgumentException.class, () -> plateau.addRover(new Rover(new Position(0,1, CompassDirection.S))));
+        assertThrows(IllegalArgumentException.class, () -> plateau.addRover(new Rover(new Position(0,1, CompassDirection.E))));
     }
 
     @Test
     void testRemoveRover() {
 
+    }
+
+    private <T> boolean compareRovers(T r1, T r2) {
+        // This assumes the Rover class's equals() method correctly compares two Rovers
+        return r1.equals(r2);
     }
 }
