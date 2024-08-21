@@ -42,15 +42,18 @@ public class InputParser {
             if (instruction != null) {
                 listOfCommands.add(instruction);
             } else {
-                throw new IllegalArgumentException("Invalid Input found!");
+                throw new IllegalArgumentException("Input is invalid!");
             }
         }
         return listOfCommands;
     }
 
     public static Position parseInputToPosition(String input) {
+        if (input == null){
+            throw new NullPointerException("No input found!");
+        }
         input = input.replaceAll("[., ]", "");
-        if (input.isEmpty() || input.length() > 3) {
+        if (input.length() != 3) {
             throw new IllegalArgumentException("input is invalid!");
         }
         String[] inputArray = input.split("");
@@ -61,6 +64,11 @@ public class InputParser {
     public static void parseInputToPlateau(String input){
         if (input.isEmpty()) {
             throw new IllegalArgumentException("input is invalid!");
+        }
+        input = input.replaceAll("[., ]", "");
+        String[] inputArray = input.split("");
+        for (String i : inputArray) {
+            
         }
 
     }
