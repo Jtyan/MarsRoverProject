@@ -3,6 +3,7 @@ package LogicLayer;
 import InputLayer.CompassDirection;
 import InputLayer.PlateauSize;
 import InputLayer.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +14,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MissionControlTest {
 
-    private static final MissionControl plateau = new MissionControl(new PlateauSize());
-    private static final Rover rover1 = new Rover(new Position(2,4, CompassDirection.N));
-    private static final Rover rover2 = new Rover(new Position(0,1, CompassDirection.S));
-    private static final Rover rover3 = new Rover(new Position(2,3, CompassDirection.E));
-    private static final Rover rover4 = new Rover(new Position(3,1, CompassDirection.W));
+
+    private MissionControl plateau;
+    private Rover rover1;
+    private Rover rover2;
+    private Rover rover3;
+    private Rover rover4;
+
+    @BeforeEach
+    void setUp() {
+        plateau = new MissionControl(new PlateauSize());
+        rover1 = new Rover(new Position(2, 4, CompassDirection.N));
+        rover2 = new Rover(new Position(0, 1, CompassDirection.S));
+        rover3 = new Rover(new Position(2, 3, CompassDirection.E));
+        rover4 = new Rover(new Position(3, 1, CompassDirection.W));
+    }
+
     @Test
     void testAddRover_WithValidPosition() {
         ArrayList<Rover> mockListOfRovers = new ArrayList<>(){{
