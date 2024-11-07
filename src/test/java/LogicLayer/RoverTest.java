@@ -67,56 +67,24 @@ class RoverTest {
     }
 
     @Test
-    void testGetNewPosition_WithOnlyListOfInstructionToMove() {
+    void testSetNewPosition_WithMovingInstruction() {
 
         Rover rover = new Rover(new Position(1,3, CompassDirection.E));
-        ArrayList<Instruction> listOfInstruction = new ArrayList<>(){{
-            add(M);
-            add(M);
-            add(M);
-            add(M);
-        }};
 
-        Position expectedResult = new Position(5, 3, CompassDirection.E);
+        Position expectedResult = new Position(2, 3, CompassDirection.E);
 
-        Position result = rover.setNewPosition(listOfInstruction);
+        Position result = rover.setNewPosition(M);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
 
     @Test
-    void testSetNewPosition_WithOnlyListOfInstructionToRotate() {
-
-        Rover rover = new Rover(new Position(1,3, CompassDirection.E));
-        ArrayList<Instruction> listOfInstruction = new ArrayList<>(){{
-            add(L);
-            add(L);
-            add(R);
-            add(L);
-        }};
+    void testGetNewPosition_WithRotatingInstruction() {
+        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
 
         Position expectedResult = new Position(1, 3, CompassDirection.W);
 
-        Position result = rover.setNewPosition(listOfInstruction);
-
-        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
-    }
-
-    @Test
-    void testGetNewPosition_WithValidListOfInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-        ArrayList<Instruction> listOfInstruction = new ArrayList<>(){{
-            add(L);
-            add(R);
-            add(M);
-            add(M);
-            add(R);
-            add(M);
-        }};
-
-        Position expectedResult = new Position(2, 5, CompassDirection.E);
-
-        Position result = rover.setNewPosition(listOfInstruction);
+        Position result = rover.setNewPosition(L);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
