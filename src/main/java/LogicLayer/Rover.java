@@ -6,6 +6,7 @@ import InputLayer.Position;
 import com.sun.source.tree.ReturnTree;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static InputLayer.CompassDirection.*;
 
@@ -25,12 +26,13 @@ public class Rover {
     }
 
     public void rotate(Instruction instruction) {
-        CompassDirection facing = getPosition().getFacing();
-        if (instruction == null) {
+        CompassDirection roverCurrentFacing = getPosition().getFacing();
+
+        if (instruction != Instruction.L && instruction != Instruction.R ) {
             throw new IllegalArgumentException("Instruction to rotate is not found!");
         }
 
-        CompassDirection newFacing = switch (facing) {
+        CompassDirection newFacing = switch (roverCurrentFacing) {
             case N -> instruction.equals(Instruction.L) ? W : E;
             case W -> instruction.equals(Instruction.L) ? S : N;
             case S -> instruction.equals(Instruction.L) ? E : W;
@@ -44,7 +46,7 @@ public class Rover {
         int y = getPosition().getY();
         CompassDirection facing = getPosition().getFacing();
 
-        if (instruction == null) {
+        if (instruction != Instruction.M) {
             throw new IllegalArgumentException("Instruction to move is not found!");
         }
 
@@ -57,14 +59,13 @@ public class Rover {
     }
 
     public Position setNewPosition(ArrayList<Instruction> ListOfInstructions) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        for (Instruction instruction: ListOfInstructions) {
-            if(instruction.equals(Instruction.L) || instruction.equals(Instruction.R)) {
+        for (Instruction instruction : ListOfInstructions) {
+            if (instruction.equals(Instruction.L) || instruction.equals(Instruction.R)) {
                 rotate(instruction);
             } else if (instruction.equals(Instruction.M)) {
                 move(instruction);
+            } else {
+                throw new IllegalArgumentException("Instruction to move or rotate is not found!");
             }
         }
         return getPosition();

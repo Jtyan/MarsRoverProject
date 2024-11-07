@@ -28,10 +28,8 @@ class RoverTest {
     @DisplayName("Expect CompassDirection unchanged when given invalid instruction")
     void testRotate_WithInvalidInstruction() {
         Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-        
-        rover.rotate(Instruction.M);
-        
-        assertEquals(CompassDirection.N, rover.getPosition().getFacing());
+
+        assertThrows(IllegalArgumentException.class, () -> rover.rotate(M));
     }
 
     @Test
@@ -44,10 +42,10 @@ class RoverTest {
 
     @Test
     void testMove_WithValidInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
+        Rover rover = new Rover(new Position(1,3, CompassDirection.S));
         rover.move(Instruction.M);
 
-        Position expectedResult = new Position(1, 4, CompassDirection.N);
+        Position expectedResult = new Position(1, 2, CompassDirection.S);
 
         assertThat(rover.getPosition()).usingRecursiveComparison().isEqualTo(expectedResult);
     }
@@ -56,31 +54,16 @@ class RoverTest {
     @DisplayName("Expect x and y unchanged when given invalid instruction")
     void testMove_WithInvalidInstruction() {
         Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-        rover.move(Instruction.R);
-        
-        Position expectedResult = new Position(1, 3, CompassDirection.N);
-        
-        assertThat(rover.getPosition()).usingRecursiveComparison().isEqualTo(expectedResult);
+
+        assertThrows(IllegalArgumentException.class, () -> rover.move(R));
     }
 
     @Test
-    void testGetNewPosition_WithValidListOfInstruction() {
-
+    @DisplayName("throw an exception when given an invalid instruction")
+    public void testMove_null() {
         Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-        ArrayList<Instruction> listOfInstruction = new ArrayList<>(){{
-            add(L);
-            add(R);
-            add(M);
-            add(M);
-            add(R);
-            add(M);
-        }};
 
-        Position expectedResult = new Position(2, 5, CompassDirection.E);
-
-        Position result = rover.setNewPosition(listOfInstruction);
-
-        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+        assertThrows(IllegalArgumentException.class, () -> rover.move(null));
     }
 
     @Test
@@ -113,6 +96,25 @@ class RoverTest {
         }};
 
         Position expectedResult = new Position(1, 3, CompassDirection.W);
+
+        Position result = rover.setNewPosition(listOfInstruction);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    }
+
+    @Test
+    void testGetNewPosition_WithValidListOfInstruction() {
+        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
+        ArrayList<Instruction> listOfInstruction = new ArrayList<>(){{
+            add(L);
+            add(R);
+            add(M);
+            add(M);
+            add(R);
+            add(M);
+        }};
+
+        Position expectedResult = new Position(2, 5, CompassDirection.E);
 
         Position result = rover.setNewPosition(listOfInstruction);
 
