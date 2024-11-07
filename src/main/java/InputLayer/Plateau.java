@@ -41,7 +41,7 @@ public class Plateau {
         this.column = column;
     }
 
-    public void generateObstaclesRandomly(Integer numberOfObstacles) {
+    public void generateObstaclesRandomPosition(Integer numberOfObstacles) {
         for (int i = 0; i < numberOfObstacles; i++) {
             Position newObstaclePosition = new Position(random.nextInt(row), random.nextInt(column));
             if (obstacles.contains(newObstaclePosition)) {

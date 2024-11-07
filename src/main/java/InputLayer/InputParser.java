@@ -1,7 +1,6 @@
 package InputLayer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InputParser {
 
@@ -61,8 +60,8 @@ public class InputParser {
     }
 
     public static ArrayList<Integer> parseInputToPlateau(String input) {
-        int width;
-        int height;
+        int row;
+        int column;
 
         if (input.isEmpty()) {
             throw new IllegalArgumentException("input is invalid!");
@@ -74,18 +73,18 @@ public class InputParser {
         }
 
         try {
-            width = Integer.parseInt(inputArray[0].trim());
-            height = Integer.parseInt(inputArray[1].trim());
+            row = Integer.parseInt(inputArray[0].trim());
+            column = Integer.parseInt(inputArray[1].trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Map dimensions must be valid integers.");
         }
-        if (width < 2 && height < 2) {
+        if (row < 2 && column < 2) {
             throw new IllegalArgumentException("Map dimensions must be at least 2x2.");
         }
 
         ArrayList<Integer> dimensions = new ArrayList<>();
-        dimensions.add(width);
-        dimensions.add(height);
+        dimensions.add(row);
+        dimensions.add(column);
 
         return dimensions;
     }
