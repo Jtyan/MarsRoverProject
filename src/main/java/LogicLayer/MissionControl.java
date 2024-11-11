@@ -1,5 +1,6 @@
 package LogicLayer;
 
+import InputLayer.InputParser;
 import InputLayer.Instruction;
 import InputLayer.Plateau;
 import InputLayer.Position;
@@ -19,7 +20,6 @@ public class MissionControl {
         return plateau;
     }
 
-
     public Position getRoverPosition(Rover rover) {
         if (rover != null) {
             return rover.getPosition();
@@ -27,28 +27,20 @@ public class MissionControl {
         throw new IllegalArgumentException("Rover does not exist on the plateau.");
     }
 
-//    private boolean checkIfAnyRoverInTheWay(Position roverPosition) {
-//        for (Rover rover : listOfRovers) {
-//            if (rover.getPosition().getX() == (roverPosition.getX())
-//                && rover.getPosition().getY() == (roverPosition.getY())
-//            ) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    //deployRover, parseInputToPosition, setRoverPosition
+    public void deployRover(String positionInput) {
+        Position validInput = InputParser.parseInputToPosition(positionInput);
+        if (plateau.hasObstacle(validInput)) {
+            throw new RuntimeException("There is an obstacle at " + validInput + ".");
+        } else if (validInput.getX() > plateau.getRow() || validInput.getY() > plateau.getColumn()) {
+            throw new RuntimeException("Rover already exists on the plateau.");
+        } else {
+            rover.setPosition(validInput);
+        }
+    }
 
-//    public  void removeRover(Rover roverToDelete) {
-//        for (Rover rover : listOfRovers) {
-//            if (rover.equals(roverToDelete)) {
-//                listOfRovers.remove(rover);
-//            } else {
-//                throw new IllegalArgumentException("This rover does not exist on the plateau.");
-//            }
-//        }
-//    }
-
-    public void moveRover(ArrayList<Instruction> validListOfInstructions) {
+    public void moveRover(String instructionInput) {
+        ArrayList<Instruction> validListOfInstructions = InputParser.parseInputToInstruction(instructionInput);
         for (Instruction instruction : validListOfInstructions) {
             Position newPosition = rover.setNewPosition(instruction);
             if (plateau.hasObstacle(newPosition)) {
