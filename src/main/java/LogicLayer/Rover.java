@@ -25,7 +25,7 @@ public class Rover {
         this.position = position;
     }
 
-    public void rotate(Instruction instruction) {
+    private void rotate(Instruction instruction) {
         CompassDirection roverCurrentFacing = getPosition().getFacing();
 
         if (instruction != Instruction.L && instruction != Instruction.R) {
@@ -41,7 +41,7 @@ public class Rover {
         setPosition(new Position(getPosition().getX(), getPosition().getY(), newFacing));
     }
 
-    public void move(Instruction instruction) {
+    private void move(Instruction instruction) {
         int x = getPosition().getX();
         int y = getPosition().getY();
         CompassDirection facing = getPosition().getFacing();
@@ -59,12 +59,12 @@ public class Rover {
     }
 
     public Position setNewPosition(Instruction instruction) {
-        if (instruction.equals(Instruction.L) || instruction.equals(Instruction.R)) {
+        if (instruction == null) {
+            throw new IllegalArgumentException("Instruction to move or rotate is not found!");
+        }else if (instruction.equals(Instruction.L) || instruction.equals(Instruction.R)) {
             rotate(instruction);
         } else if (instruction.equals(Instruction.M)) {
             move(instruction);
-        } else {
-            throw new IllegalArgumentException("Instruction to move or rotate is not found!");
         }
         return getPosition();
     }

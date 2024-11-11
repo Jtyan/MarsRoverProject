@@ -1,75 +1,56 @@
 package LogicLayer;
 
 import InputLayer.CompassDirection;
-import InputLayer.Instruction;
 import InputLayer.Position;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static InputLayer.Instruction.*;
 import static InputLayer.Instruction.M;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RoverTest {
+    Rover rover;
 
-    @Test
-    void testRotate_WithValidInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-        
-        rover.rotate(Instruction.L);
-        
-        assertEquals(CompassDirection.W, rover.getPosition().getFacing());
+    @BeforeEach
+    void setUp() {
+        rover = new Rover();
     }
 
     @Test
-    @DisplayName("Expect CompassDirection unchanged when given invalid instruction")
-    void testRotate_WithInvalidInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
+    void testSetNewPosition_WithMovingInstructionWhenFacingNorth() {
+        rover.setPosition(new Position(1, 3, CompassDirection.N));
+        Position expectedResult = new Position(1, 4, CompassDirection.N);
 
-        assertThrows(IllegalArgumentException.class, () -> rover.rotate(M));
+        Position result = rover.setNewPosition(M);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
 
     @Test
-    @DisplayName("throw an exception when given an invalid string of instruction")
-    public void testRotate_null() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
+    void testSetNewPosition_WithMovingInstructionWhenFacingWest() {
+        rover.setPosition(new Position(1, 3, CompassDirection.W));
 
-        assertThrows(IllegalArgumentException.class, () -> rover.rotate(null));
+        Position result = rover.setNewPosition(M);
+        Position expectedResult = new Position(0, 3, CompassDirection.W);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
 
     @Test
-    void testMove_WithValidInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.S));
-        rover.move(Instruction.M);
-
+    void testSetNewPosition_WithMovingInstructionWhenFacingSouth() {
+        rover.setPosition(new Position(1, 3, CompassDirection.S));
         Position expectedResult = new Position(1, 2, CompassDirection.S);
 
-        assertThat(rover.getPosition()).usingRecursiveComparison().isEqualTo(expectedResult);
+        Position result = rover.setNewPosition(M);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
 
     @Test
-    @DisplayName("Expect x and y unchanged when given invalid instruction")
-    void testMove_WithInvalidInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-
-        assertThrows(IllegalArgumentException.class, () -> rover.move(R));
-    }
-
-    @Test
-    @DisplayName("throw an exception when given an invalid instruction")
-    public void testMove_null() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-
-        assertThrows(IllegalArgumentException.class, () -> rover.move(null));
-    }
-
-    @Test
-    void testSetNewPosition_WithMovingInstruction() {
-
-        Rover rover = new Rover(new Position(1,3, CompassDirection.E));
+    void testSetNewPosition_WithMovingInstructionWhenFacingEast() {
+        rover.setPosition(new Position(1, 3, CompassDirection.E));
 
         Position expectedResult = new Position(2, 3, CompassDirection.E);
 
@@ -79,13 +60,54 @@ class RoverTest {
     }
 
     @Test
-    void testGetNewPosition_WithRotatingInstruction() {
-        Rover rover = new Rover(new Position(1,3, CompassDirection.N));
-
+    void testSetNewPosition_WithRotatingLeftWhenFacingNorth() {
+        rover.setPosition(new Position(1, 3, CompassDirection.N));
         Position expectedResult = new Position(1, 3, CompassDirection.W);
 
         Position result = rover.setNewPosition(L);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
     }
+
+    @Test
+    void testSetNewPosition_WithRotatingLeftWhenFacingWest() {
+        rover.setPosition(new Position(1, 3, CompassDirection.W));
+        Position expectedResult = new Position(1, 3, CompassDirection.S);
+
+        Position result = rover.setNewPosition(L);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    }
+
+    @Test
+    void testSetNewPosition_WithRotatingRightWhenFacingSouth() {
+        rover.setPosition(new Position(1, 3, CompassDirection.S));
+        Position expectedResult = new Position(1, 3, CompassDirection.W);
+
+        Position result = rover.setNewPosition(R);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    }
+
+    @Test
+    void testSetNewPosition_WithRotatingRightWhenFacingEast() {
+        rover.setPosition(new Position(1, 3, CompassDirection.E));
+        Position expectedResult = new Position(1, 3, CompassDirection.S);
+
+        Position result = rover.setNewPosition(R);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    }
+
+    @Test
+    void testSetNewPosition_InvalidInstruction() {
+        rover.setPosition(new Position(0, 0, CompassDirection.N));
+        assertThrows(IllegalArgumentException.class, () -> rover.setNewPosition(null));
+    }
+
+    @Test
+    void testRotateFromUninitializedPosition() {
+        assertThrows(NullPointerException.class, () -> rover.setNewPosition(L));
+    }
+
 }
