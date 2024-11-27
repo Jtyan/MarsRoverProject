@@ -55,7 +55,7 @@ public class MissionControl {
                 if (hasObstacle) {
                     System.out.println("There is an obstacle in front. Please input new instruction.");
                     return;
-                } else if (rover.getPosition().getX() >= plateau.getRow() || rover.getPosition().getY() >= plateau.getColumn()) {
+                } else if (rover.getPosition().getX() >= plateau.getRow() || rover.getPosition().getY() >= plateau.getColumn() || rover.getPosition().getX() < 1 || rover.getPosition().getY() < 1) {
                     System.out.println("Rover cannot move outside of the plateau.");
                     return;
                 } else {
