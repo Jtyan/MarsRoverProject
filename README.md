@@ -2,7 +2,7 @@
 
 The surface of Mars is represented by a Plateau. You can make the assumption that the Plateau is a square/rectangular grid for the purpose of this task.
 
-Rovers navigate the Plateau by following a sequence of commands. They can also use their cameras and robot arms to collect photographs and samples.
+Rovers navigate the Plateau by following a sequence of commands.
 
 ## The Plateau
 
@@ -14,7 +14,7 @@ A Rover's position is represented by x and y co-ordinates and the letters N, S, 
 
 ```
 Example
-0 0 N
+0,0,N
 ```
 
 This means the Rover is at the bottom-left corner facing in the North direction.
@@ -30,7 +30,7 @@ The first line inputted into the program represents the upper-right coordinates 
 Example:
 
 ```
-5 5
+5,5
 ```
 
 This Plateau has maximum (x, y) co-ordinates of (5, 5), and is therefore a Plateau of size (6,6).
@@ -42,7 +42,7 @@ This Plateau has maximum (x, y) co-ordinates of (5, 5), and is therefore a Plate
 Following the plateau creation, each Rover receives two lines of input. The first line of input is to land the Rover at a particular starting position, e.g.
 
 ```
-1 2 N
+1,2,N
 ```
 
 This lands the Rover at position (1,2) facing North.
@@ -72,10 +72,10 @@ Rovers move sequentially, this means that if multiple Rovers are being landed th
 Given the following input:
 
 ```
-5 5
-1 2 N
+5,5
+1,2,N
 LMLMLMLMM
-3 3 E
+3,3,E
 MMRMMRMRRM
 ```
 
@@ -84,6 +84,6 @@ This creates a plateau of size `(5,5)` and lands two rovers on it. The first lan
 The expected output is:
 
 ```
-1 3 N
-5 1 E
+1,3,N
+5,1,E
 ```
