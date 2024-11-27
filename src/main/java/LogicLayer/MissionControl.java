@@ -60,13 +60,13 @@ public class MissionControl {
                     return;
                 } else {
                     rover.setNewPosition(instruction);
-                    System.out.println("Rover current Position: " + rover.getPosition().getX() + "," + rover.getPosition().getY() + "," + rover.getPosition().getFacing() + ".");
+                    System.out.println("Rover moves to " + rover.getPosition().getX() + "," + rover.getPosition().getY() + "," + rover.getPosition().getFacing() + ".");
                 }
 
             } else if (instruction == Instruction.L || instruction == Instruction.R) {
                 rover.setNewPosition(instruction);
-                System.out.println("Rover current Position: " + rover.getPosition().getX() + "," + rover.getPosition().getY() + "," + rover.getPosition().getFacing() + ".");
             }
         }
+        System.out.println("Rover final position: " + rover.getPosition().getX() + "," + rover.getPosition().getY() + "," + rover.getPosition().getFacing() + ".");
     }
 }

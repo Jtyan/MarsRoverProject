@@ -58,7 +58,7 @@ public class Plateau {
         int maxObstacles = (int) Math.ceil(totalCells / 10.0);
         int numberOfObstacles = random.nextInt(maxObstacles);
 
-        System.out.println("Number of obstacles placed: " + numberOfObstacles);
+        System.out.println("Randomised number of obstacles placed on the map: " + numberOfObstacles);
 
         for (int i = 0; i < numberOfObstacles; i++) {
             Position newObstaclePosition;
@@ -78,7 +78,8 @@ public class Plateau {
             } while (isDuplicate);
 
             obstacles.add(newObstaclePosition);
-            System.out.println(newObstaclePosition.getX() + "," + newObstaclePosition.getY());
+            int obstacleNumber = i + 1;
+            System.out.println("Obstacle " + obstacleNumber + " position: " + newObstaclePosition.getX() + "," + newObstaclePosition.getY());
         }
     }
 
