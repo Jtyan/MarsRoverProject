@@ -14,7 +14,7 @@ A Rover's position is represented by x and y co-ordinates and the letters N, S, 
 
 ```
 Example
-0,0,N
+1,1,N
 ```
 
 This means the Rover is at the bottom-left corner facing in the North direction.
@@ -33,9 +33,9 @@ Example:
 5,5
 ```
 
-This Plateau has maximum (x, y) co-ordinates of (5, 5), and is therefore a Plateau of size (6,6).
+This Plateau has maximum (x, y) co-ordinates of (5, 5), and is therefore a Plateau of size (5,5).
 
-> Assume that the lower-left coordinate is (0, 0).
+> Assume that the lower-left coordinate is (1, 1).
 
 ### Subsequent lines: Rover Creation & Instructions
 
