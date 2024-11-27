@@ -25,6 +25,10 @@ public class Plateau {
         return instance;
     }
 
+    public static synchronized void resetInstance() {
+        instance = null;
+    }
+
     public int getRow() {
         return row;
     }
@@ -45,10 +49,14 @@ public class Plateau {
         return obstacles;
     }
 
+    public void setObstacles(Set<Position> obstacles) {
+        this.obstacles = obstacles;
+    }
+
     public void generateObstaclesRandomPosition() {
         int totalCells = row * column;
-        int minObstacles = (int) Math.ceil(totalCells / 10.0);
-        int numberOfObstacles = random.nextInt(minObstacles);
+        int maxObstacles = (int) Math.ceil(totalCells / 10.0);
+        int numberOfObstacles = random.nextInt(maxObstacles);
 
         System.out.println("Number of obstacles placed: " + numberOfObstacles);
 
