@@ -36,9 +36,14 @@ public class InputPrompt {
     }
 
     public static void deployRoverInput() {
-        System.out.println("\nNow, enter the x and y coordinates of the rover along with its initial facing direction(N,S,E,W). e.g: 2,4,N: ");
-        String positionInput = scanner.next();
-        missionControl.deployRover(positionInput);
+        Boolean isRoverDeployed;
+
+        do {
+            System.out.println("\nNow, enter the x and y coordinates of the rover along with its initial facing direction(N,S,E,W). e.g: 2,4,N: ");
+            String positionInput = scanner.next();
+            isRoverDeployed = missionControl.deployRover(positionInput);
+        } while (!isRoverDeployed);
+
     }
 
     public static void moveRoverInput() {
@@ -47,7 +52,7 @@ public class InputPrompt {
             String instructions = scanner.next();
             System.out.println("Rover initial position: " + rover.getPosition().getX() + "," + rover.getPosition().getY() + "," + rover.getPosition().getFacing() + ".");
             missionControl.moveRover(instructions);
-            System.out.println("Would you like to continue? (Y/N):");
+            System.out.println("Would you like to continue? (Y/N): ");
         }while (scanner.next().equalsIgnoreCase("Y"));
     }
 }
