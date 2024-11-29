@@ -27,15 +27,18 @@ public class MissionControl {
         throw new IllegalArgumentException("Rover does not exist on the plateau.");
     }
 
-    public void deployRover(String positionInput) {
+    public Boolean deployRover(String positionInput) {
         Position validInput = InputParser.parseInputToPosition(positionInput);
         if (plateau.hasObstacle(validInput)) {
             System.out.println("Unable to place the rover. There is an obstacle at the location.");
+            return false;
         } else if (validInput.getX() > plateau.getRow() || validInput.getY() > plateau.getColumn()) {
             System.out.println("Rover cannot be deployed outside of the plateau.");
+            return false;
         } else {
             rover.setPosition(validInput);
             System.out.println("Rover deployed at position: " + validInput.getX() + "," + validInput.getY() + "," + validInput.getFacing() + ".");
+            return true;
         }
     }
 
@@ -55,7 +58,8 @@ public class MissionControl {
                 if (hasObstacle) {
                     System.out.println("There is an obstacle in front. Please input new instruction.");
                     return;
-                } else if (rover.getPosition().getX() >= plateau.getRow() || rover.getPosition().getY() >= plateau.getColumn() || rover.getPosition().getX() < 1 || rover.getPosition().getY() < 1) {
+                } else if (rover.getPosition().getX() >= plateau.getRow()  || rover.getPosition().getY() >= plateau.getColumn()
+                        || rover.getPosition().getX() < 1 || rover.getPosition().getY() < 1) {
                     System.out.println("Rover cannot move outside of the plateau.");
                     return;
                 } else {
